@@ -43,6 +43,7 @@ contract DSRoles is DSAuth, DSAuthority
     }
 
     function isUserRoot(address who)
+        virtual
         public
         view
         returns (bool)
