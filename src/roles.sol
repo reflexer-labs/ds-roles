@@ -59,6 +59,7 @@ contract DSRoles is DSAuth, DSAuthority
     }
 
     function hasUserRole(address who, uint8 role)
+        virtual
         public
         view
         returns (bool)
@@ -88,6 +89,7 @@ contract DSRoles is DSAuth, DSAuthority
     }
 
     function setRootUser(address who, bool enabled)
+        virtual
         public
         auth
     {
@@ -95,6 +97,7 @@ contract DSRoles is DSAuth, DSAuthority
     }
 
     function setUserRole(address who, uint8 role, bool enabled)
+        virtual
         public
         auth
     {
@@ -108,6 +111,7 @@ contract DSRoles is DSAuth, DSAuthority
     }
 
     function setPublicCapability(address code, bytes4 sig, bool enabled)
+        virtual
         public
         auth
     {
@@ -115,6 +119,7 @@ contract DSRoles is DSAuth, DSAuthority
     }
 
     function setRoleCapability(uint8 role, address code, bytes4 sig, bool enabled)
+        virtual
         public
         auth
     {
