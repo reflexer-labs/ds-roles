@@ -26,6 +26,12 @@ contract DSRoles is DSAuth, DSAuthority
     mapping(address=>mapping(bytes4=>bytes32)) _capability_roles;
     mapping(address=>mapping(bytes4=>bool)) _public_capabilities;
 
+    // --- Events ---
+    event SetRootUser(address who, bool enabled);
+    event SetUserRole(address who, uint8 role, bool enabled);
+    event SetPublicCapability(address code, bytes4 sig, bool enabled);
+    event SetRoleCapability(uint8 role, address code, bytes4 sig, bool enabled);
+
     function getUserRoles(address who)
         public
         view
@@ -95,6 +101,7 @@ contract DSRoles is DSAuth, DSAuthority
         auth
     {
         _root_users[who] = enabled;
+        emit SetRootUser(who, enabled);
     }
 
     function setUserRole(address who, uint8 role, bool enabled)
@@ -109,6 +116,7 @@ contract DSRoles is DSAuth, DSAuthority
         } else {
             _user_roles[who] = last_roles & BITNOT(shifted);
         }
+        emit SetUserRole(who, role, enabled);
     }
 
     function setPublicCapability(address code, bytes4 sig, bool enabled)
@@ -117,6 +125,7 @@ contract DSRoles is DSAuth, DSAuthority
         auth
     {
         _public_capabilities[code][sig] = enabled;
+        emit SetPublicCapability(code, sig, enabled);
     }
 
     function setRoleCapability(uint8 role, address code, bytes4 sig, bool enabled)
@@ -131,7 +140,7 @@ contract DSRoles is DSAuth, DSAuthority
         } else {
             _capability_roles[code][sig] = last_roles & BITNOT(shifted);
         }
-
+        emit SetRoleCapability(role, code, sig, enabled);
     }
 
 }
