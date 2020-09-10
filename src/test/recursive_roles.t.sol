@@ -1,7 +1,5 @@
 // roles.t.sol - test for roles.sol
 
-// Copyright (C) 2017  DappHub, LLC
-
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -19,8 +17,8 @@ pragma solidity >=0.4.23;
 
 import 'ds-test/test.sol';
 import 'ds-auth/auth.sol';
-import './recursive_roles.sol';
-import './roles.sol';
+import '../recursive_roles.sol';
+import '../roles.sol';
 
 contract authed is DSAuth {
 	bool public flag1;
@@ -120,7 +118,7 @@ contract DSRecursiveRolesTest is DSTest {
 		r.setAuthority(r);
 	}
 
-    	function testRecursiveBasics() public {
+    function testRecursiveBasics() public {
 		uint8 root_role = 0;
 		uint8 admin_role = 1;
 		uint8 mod_role = 2;
