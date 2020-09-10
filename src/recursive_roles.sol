@@ -143,4 +143,13 @@ contract DSRecursiveRoles is DSAuth, DSAuthority
         emit SetRoleCapability(role, code, sig, enabled);
     }
 
+    function setAuthority(DSAuthority authority_)
+        override
+        public
+        auth
+    {
+        require(address(authority_) != address(this), "ds-recursive-roles-invalid-authority");
+        super.setAuthority(authority_);
+    }
+
 }
