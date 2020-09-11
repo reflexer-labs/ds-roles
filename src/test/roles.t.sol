@@ -19,7 +19,7 @@ pragma solidity >=0.4.23;
 
 import 'ds-test/test.sol';
 import 'ds-auth/auth.sol';
-import './roles.sol';
+import '../roles.sol';
 
 contract authed is DSAuth {
 	bool public flag1;

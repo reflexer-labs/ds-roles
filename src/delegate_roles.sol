@@ -19,7 +19,7 @@ pragma solidity >=0.4.23;
 
 import 'ds-auth/auth.sol';
 
-contract DSRecursiveRoles is DSAuth, DSAuthority
+contract DSDelegateRoles is DSAuth, DSAuthority
 {
     mapping(address=>bool) _root_users;
     mapping(address=>bytes32) _user_roles;
@@ -141,6 +141,27 @@ contract DSRecursiveRoles is DSAuth, DSAuthority
             _capability_roles[code][sig] = last_roles & BITNOT(shifted);
         }
         emit SetRoleCapability(role, code, sig, enabled);
+    }
+
+    function setAuthority(DSAuthority authority_)
+        override
+        public
+        auth
+    {
+        require(address(authority_) != address(this), "ds-recursive-roles-invalid-authority");
+        super.setAuthority(authority_);
+    }
+
+    function isAuthorized(address src, bytes4 sig) override internal view returns (bool) {
+        if (src == address(this)) {
+            return true;
+        } else if (src == owner) {
+            return true;
+        } else if (authority == DSAuthority(0)) {
+            return false;
+        } else {
+            return authority.canCall(src, address(msg.sender), sig);
+        }
     }
 
 }
