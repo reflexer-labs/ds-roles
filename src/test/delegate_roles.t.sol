@@ -17,7 +17,7 @@ pragma solidity >=0.4.23;
 
 import 'ds-test/test.sol';
 import 'ds-auth/auth.sol';
-import '../recursive_roles.sol';
+import '../delegate_roles.sol';
 import '../roles.sol';
 
 contract authed is DSAuth {
@@ -43,15 +43,15 @@ contract User {
     }
 }
 
-contract DSRecursiveRolesTest is DSTest {
-	DSRecursiveRoles r;
+contract DSDelegateRolesTest is DSTest {
+	DSDelegateRoles r;
     DSRoles authority;
 	address a;
     address self;
     address user;
 
 	function setUp() public {
-		r = new DSRecursiveRoles();
+		r = new DSDelegateRoles();
 		a = address(new authed());
         self = address(this);
         user = address(new User(a));
@@ -118,7 +118,7 @@ contract DSRecursiveRolesTest is DSTest {
 		r.setAuthority(r);
 	}
 
-    function testRecursiveBasics() public {
+    function testDelegateBasics() public {
 		uint8 root_role = 0;
 		uint8 admin_role = 1;
 		uint8 mod_role = 2;
@@ -145,7 +145,7 @@ contract DSRecursiveRolesTest is DSTest {
 		assertTrue(!authority.hasUserRole(user, user_role));
 	}
 
-	function testRecursiveRoot() public {
+	function testDelegateRoot() public {
 		assertTrue(!authority.isUserRoot(user));
 		assertTrue(!authority.canCall(user, a, bytes4(keccak256("cap1()"))));
 
@@ -158,7 +158,7 @@ contract DSRecursiveRolesTest is DSTest {
 		assertTrue(!authority.canCall(user, a, bytes4(keccak256("cap1()"))));
 	}
 
-	function testRecursivePublicCapabilities() public {
+	function testDelegatePublicCapabilities() public {
 		assertTrue(!authority.isCapabilityPublic(a, bytes4(keccak256("cap1()"))));
 		assertTrue(!authority.canCall(user, a, bytes4(keccak256("cap1()"))));
 

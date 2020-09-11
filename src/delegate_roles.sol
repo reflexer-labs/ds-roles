@@ -19,7 +19,7 @@ pragma solidity >=0.4.23;
 
 import 'ds-auth/auth.sol';
 
-contract DSRecursiveRoles is DSAuth, DSAuthority
+contract DSDelegateRoles is DSAuth, DSAuthority
 {
     mapping(address=>bool) _root_users;
     mapping(address=>bytes32) _user_roles;
