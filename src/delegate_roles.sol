@@ -1,4 +1,4 @@
-// roles.sol - recursive roled based authentication (allows the owner and the authority to pass canCall)
+// delegate_roles.sol - delegate roled based authentication (allows the owner and the authority to pass canCall)
 
 // Copyright (C) 2017  DappHub, LLC
 
